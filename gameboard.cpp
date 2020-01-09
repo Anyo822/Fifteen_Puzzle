@@ -1,6 +1,7 @@
 #include "gameboard.h"
 #include <algorithm>
 #include <random>
+#include <QDebug>
 
 GameBoard::GameBoard(QObject *parent, size_t board_dimension)
     : QAbstractListModel {parent},
@@ -37,12 +38,16 @@ QVariant GameBoard::data(const QModelIndex &index, int role) const
 
 void GameBoard::shuffle()
 {
+    qWarning() << "!!!!!!!!!!!!! 2";
     static auto seed = std::chrono::system_clock::now().time_since_epoch().count();
     static std::mt19937 generator(seed);
 
     do {
         std::shuffle(m_rawBoard.begin(), m_rawBoard.end(), generator);
     } while (!isBoardValid());
+
+    emit dataChanged(createIndex(0, 0), createIndex(m_boardSize, 0));
+
 }
 
 bool GameBoard::isPositionValid(const size_t position) const

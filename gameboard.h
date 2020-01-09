@@ -31,8 +31,8 @@ public:
     size_t dimension() const;
     size_t boardSize() const;
     size_t hiddenElementValue() const;
+    Q_INVOKABLE void shuffle();
 private:
-    void shuffle();
     bool isPositionValid(const size_t position) const;
     bool isBoardValid() const;
     Position getRowCol(const size_t index) const;
