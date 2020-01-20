@@ -58,23 +58,23 @@ bool GameBoard::isPositionValid(const size_t position) const
 bool GameBoard::isBoardValid() const
 {
     int inv {0};
-        for (size_t i {0}; i < m_boardSize; ++i) {
-            for (size_t j = 0; j < i; ++j) {
-                if (m_rawBoard[j] > m_rawBoard[i]) {
-                    ++inv;
-                }
+    for (size_t i {0}; i < m_boardSize; ++i) {
+        for (size_t j = 0; j < i; ++j) {
+            if (m_rawBoard[j] > m_rawBoard[i]) {
+                ++inv;
             }
         }
+    }
 
-        const size_t start_point = 1;
+    const size_t start_point = 1;
 
-        for (size_t i = 0; i < m_boardSize; ++i) {
-            if (m_rawBoard[i] == m_boardSize) {
-                inv += start_point + i / m_dimension;
-            }
+    for (size_t i = 0; i < m_boardSize; ++i) {
+        if (m_rawBoard[i] == m_boardSize) {
+            inv += start_point + i / m_dimension;
         }
+    }
 
-        return (inv % 2) == 0;
+    return (inv % 2) == 0;
 }
 
 GameBoard::Position GameBoard::getRowCol(size_t index) const
@@ -110,30 +110,9 @@ namespace {
 
         const auto calcDistance = [](const size_t pos1, const size_t pos2) {
             return std::abs(static_cast<int>(pos1) - static_cast<int>(pos2));
-
-//                    int distance = static_cast<int>(pos1);
-//            distance -= static_cast<int>(pos2);
-//            distance = std::abs(distance);
-//            return distance;
         };
 
         return calcDistance(f.first, s.first) + calcDistance(f.second, s.second) == 1;
-
-//        bool result {false};
-
-//        if (f.first == s.first) {
-//           int distance = calcDistance(f.second, s.second);
-//           if(distance == 1) {
-//               result = true;
-//           }
-//        } else if (f.second == s.second) {
-//            int distance = calcDistance(f.first, s.first);
-//            if (distance == 1) {
-//                result = true;
-//            }
-//        }
-
-//        return result;
     }
 }
 
@@ -157,8 +136,6 @@ bool GameBoard::move(const int index)
     int emptyTile = std::distance(m_rawBoard.begin(), hiddenElementIterator);
     int clickedTile = std::distance(m_rawBoard.begin(), std::find(m_rawBoard.begin(), m_rawBoard.end(), m_rawBoard[index]));
     int moveDirection = emptyTile - clickedTile;
-
-    //beginmoverows
 
     if (moveDirection > 1)
     {
@@ -188,8 +165,6 @@ bool GameBoard::move(const int index)
     }
 
     std::swap(*hiddenElementIterator, m_rawBoard[index]);
-
-    //emit dataChanged(createIndex(0, 0), createIndex(m_boardSize, 0));
 
     return true;
 }
