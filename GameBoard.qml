@@ -31,4 +31,11 @@ GridView {
             }
         }
     }
+
+    move: Transition {
+        NumberAnimation {
+            properties: "x,y"
+            duration: 200
+        }
+    }
 }

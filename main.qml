@@ -29,7 +29,6 @@ Window {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    console.error("!!!!!!!!!!! 1", gameBoard.model);
                     gameBoard.model.shuffle()
                 }
             }
