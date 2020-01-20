@@ -26,7 +26,7 @@ private:
     bool isBoardValid() const;
     Position getRowCol(const size_t index) const;
 
-    std::vector<size_t> m_rawBoard;
+    std::vector<int> m_rawBoard;
     const size_t m_dimension;
     const size_t m_boardSize;
     const size_t m_hiddenElementValue;

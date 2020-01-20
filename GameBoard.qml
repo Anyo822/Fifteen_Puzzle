@@ -16,7 +16,7 @@ GridView {
         width: root.cellWidth
         height: root.cellHeight
 
-        visible: root.model.hiddenElementValue != display
+        visible: root.model.hiddenElementValue !== display
 
         Tile {
             anchors.fill: _background

@@ -135,32 +135,16 @@ bool GameBoard::move(const int index)
 
     int emptyTile = std::distance(m_rawBoard.begin(), hiddenElementIterator);
     int clickedTile = std::distance(m_rawBoard.begin(), std::find(m_rawBoard.begin(), m_rawBoard.end(), m_rawBoard[index]));
-    int moveDirection = emptyTile - clickedTile;
 
-    if (moveDirection > 1)
-    {
-        beginMoveRows(QModelIndex {}, emptyTile, emptyTile, QModelIndex {}, clickedTile);
-        endMoveRows();
+    int offsetDirection = clickedTile - emptyTile;
+    int offset = offsetDirection == -1 ? 1 : 0;
 
-        beginMoveRows(QModelIndex {}, clickedTile + 1, clickedTile + 1, QModelIndex {}, emptyTile + 1);
-        endMoveRows();
-    }
-    else if (moveDirection < -1)
-    {
-        beginMoveRows(QModelIndex {}, emptyTile, emptyTile, QModelIndex {}, clickedTile);
-        endMoveRows();
+    beginMoveRows(QModelIndex {}, clickedTile, clickedTile, QModelIndex {}, emptyTile + offset);
+    endMoveRows();
 
-        beginMoveRows(QModelIndex {}, clickedTile, clickedTile, QModelIndex {}, emptyTile);
-        endMoveRows();
-    }
-    else if (moveDirection == -1)
-    {
-        beginMoveRows(QModelIndex {}, clickedTile, clickedTile, QModelIndex {}, emptyTile);
-        endMoveRows();
-    }
-    else if (moveDirection == 1)
-    {
-        beginMoveRows(QModelIndex {}, clickedTile, clickedTile, QModelIndex {}, emptyTile + 1);
+    if (std::abs(emptyTile - clickedTile) > 1) {
+        offset = offsetDirection > 0 ? 1 : 0;
+        beginMoveRows(QModelIndex {}, emptyTile + offset, emptyTile + offset, QModelIndex {}, clickedTile + offset);
         endMoveRows();
     }
 
